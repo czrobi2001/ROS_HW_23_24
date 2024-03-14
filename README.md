@@ -8,5 +8,6 @@ col 2 is|center-aligned|2
 col 3 is|right-aligned|3
 
 $$
-a = bs
+a &=& bs
+aasdlakf &=& asda
 $$
