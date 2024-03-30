@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+  <!-- Start a Python and a C++ publisher with different names -->
+  <node name="publisher_p" pkg="bme_ros_tutorials" type="publisher.py" output ="screen"/>
+  <node name="subscriber_p" pkg="bme_ros_tutorials" type="subscriber.py" output ="screen"/>
+</launch>
