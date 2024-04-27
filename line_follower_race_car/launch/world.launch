@@ -3,7 +3,7 @@
 <launch>
 
   <!-- World File -->
-  <arg name="world_file" default="$(find line_follower_race_car)/worlds/world_modified.world"/>
+  <arg name="world_file" default="$(find line_follower_race_car)/worlds/monaco.world"/>
 
   <!-- Launch Gazebo World -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
