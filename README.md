@@ -4,6 +4,7 @@
 [image2]: ./assets/track_cad.png "Monaco track"
 [image3]: ./assets/gazebo_model_tree.png "Gazebo model - Monaco"
 [image4]: ./assets/Gazebo_sim.png "Gazebo szimuláció"
+[image5]: ./assets/rqt_cam.png "Kamera kép - rqt"
 
 # Robotrendszerek laboratórium projekt feladat
 Robotrendszerek laboratórium tárgynak féléves projekt feladata, ahol ROS Noetic környezetben fejlesztettünk egy mobil robotot.
@@ -51,6 +52,11 @@ A színek megfelelő megjelenítéséhez egy megfelelő Gazebo modell is készü
   ![alt text][image4]
 
 # Alkalmazott szenzorok
+A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, aminek paramétereit az órán használtak alapján állítottuk be.
+
+  Az élőkép RQT-ben:
+
+  ![alt text][image5]
 
 ## Kamera
 
