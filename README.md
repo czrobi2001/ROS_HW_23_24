@@ -46,8 +46,9 @@ A színek megfelelő megjelenítéséhez egy megfelelő Gazebo modell is készü
 
 # Gazebo szimuláció
 
-    A versenyautó és pálya megjelenítése a szimulációban:
-    ![alt text][image4]
+  A versenyautó és pálya megjelenítése a szimulációban:
+
+  ![alt text][image4]
 
 # Alkalmazott szenzorok
 
