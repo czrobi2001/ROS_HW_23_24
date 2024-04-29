@@ -3,6 +3,7 @@
 [image1]: ./assets/race_car_cad.png "Race car"
 [image2]: ./assets/track_cad.png "Monaco track"
 [image3]: ./assets/gazebo_model_tree.png "Gazebo model - Monaco"
+[image4]: ./assets/Gazeb_sim.png "Gazebo szimuláció"
 
 # Robotrendszerek laboratórium projekt feladat
 Robotrendszerek laboratórium tárgynak féléves projekt feladata, ahol ROS Noetic környezetben fejlesztettünk egy mobil robotot.
@@ -14,10 +15,11 @@ A sikeres telepítéshez és futtatáshoz szükséges fontosabb lépések:
 1. [Kezdőcsomag](#Kezdőcsomag)  
 2. [Versenyautó megtervezése](#Versenyautó-megtervezése)
 3. [Versenypálya](#Versenypálya)
-4. [Alaklmazott szenzorok](#Alaklmazott-szenzorok)  
-4.1. [Kamera](#Kamera)
-5. [Képfeldolgozás OpenCV-vel](#Képfeldolgozás-OpenCV-vel])
-6. [Szimuláció futtatása](#Szimuláció-futtatása)
+4. [Gazebo szimuláció](#Gezbo-szimuláció)
+5. [Alaklmazott szenzorok](#Alaklmazott-szenzorok)  
+5.1. [Kamera](#Kamera)
+6. [Képfeldolgozás OpenCV-vel](#Képfeldolgozás-OpenCV-vel])
+7. [Szimuláció futtatása](#Szimuláció-futtatása)
 
 # Kezdőcsomag
 A kezdőcsomagban a tantárgy során használt plug-in-ket már tartalmazza, illetve az alapvető .launch fájlokat, amikkel megjeleníthetjük a robotot, pályát, illetve a kettőt egy térben.
@@ -40,8 +42,12 @@ A színek megfelelő megjelenítéséhez egy megfelelő Gazebo modell is készü
 
   A sikeres gazebo modell létrehozásáhaz az alábbi fájlokat kell a pálya neve alatti Gazbo modell  könyvtárban létrehozni:
 
-  ![alt text][image3] 
+  ![alt text][image3]
 
+# Gazebo szimuláció
+
+    A versenyautó és pálya megjelenítése a szimulációban:
+    ![alt text][image4]
 
 # Alkalmazott szenzorok
 
