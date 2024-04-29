@@ -3,7 +3,7 @@
 [image1]: ./assets/race_car_cad.png "Race car"
 [image2]: ./assets/track_cad.png "Monaco track"
 [image3]: ./assets/gazebo_model_tree.png "Gazebo model - Monaco"
-[image4]: ./assets/Gazeb_sim.png "Gazebo szimuláció"
+[image4]: ./assets/Gazebo_sim.png "Gazebo szimuláció"
 
 # Robotrendszerek laboratórium projekt feladat
 Robotrendszerek laboratórium tárgynak féléves projekt feladata, ahol ROS Noetic környezetben fejlesztettünk egy mobil robotot.
