@@ -16,11 +16,12 @@ A sikeres telepítéshez és futtatáshoz szükséges fontosabb lépések:
 1. [Kezdőcsomag](#Kezdőcsomag)  
 2. [Versenyautó megtervezése](#Versenyautó-megtervezése)
 3. [Versenypálya](#Versenypálya)
-4. [Gazebo szimuláció](#Gezbo-szimuláció)
+4. [Gazebo szimuláció](#Gazebo-szimuláció)
 5. [Alaklmazott szenzorok](#Alaklmazott-szenzorok)  
 5.1. [Kamera](#Kamera)
-6. [Képfeldolgozás OpenCV-vel](#Képfeldolgozás-OpenCV-vel])
-7. [Szimuláció futtatása](#Szimuláció-futtatása)
+6. [Ackermann kormányzás](#Ackerman-kormányzás)
+7. [Képfeldolgozás OpenCV-vel](#Képfeldolgozás-OpenCV-vel])
+8. [Szimuláció futtatása](#Szimuláció-futtatása)
 
 # Kezdőcsomag
 A kezdőcsomagban a tantárgy során használt plug-in-ket már tartalmazza, illetve az alapvető .launch fájlokat, amikkel megjeleníthetjük a robotot, pályát, illetve a kettőt egy térben.
@@ -54,11 +55,12 @@ A színek megfelelő megjelenítéséhez egy megfelelő Gazebo modell is készü
 # Alkalmazott szenzorok
 A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, aminek paramétereit az órán használtak alapján állítottuk be.
 
+## Kamera
   Az élőkép RQT-ben:
 
   ![alt text][image5]
 
-## Kamera
+## Ackermann kormányzás
 
 # Képfeldolgozás OpenCV-vel
 
