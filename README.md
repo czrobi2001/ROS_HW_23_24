@@ -22,6 +22,7 @@ A sikeres telepítéshez és futtatáshoz szükséges fontosabb lépések:
 6. [Ackermann kormányzás](#Ackerman-kormányzás)
 7. [Képfeldolgozás OpenCV-vel](#Képfeldolgozás-OpenCV-vel])
 8. [Szimuláció futtatása](#Szimuláció-futtatása)
+9. [Telepítési útmutató](#Telepítési-útmutató)
 
 # Kezdőcsomag
 A kezdőcsomagban a tantárgy során használt plug-in-ket már tartalmazza, illetve az alapvető .launch fájlokat, amikkel megjeleníthetjük a robotot, pályát, illetve a kettőt egy térben.
@@ -40,7 +41,7 @@ A versenypályát szintén Solidworks-ben egy letöltött, és importált kép s
 
   ![alt text][image2] 
 
-A színek megfelelő megjelenítéséhez egy megfelelő Gazebo modell is készült, amit az alapértelmezett Gazebo modellek telepítési könyvtárában kell elhelyezni, hogy megtalálja a modell behíváskor a gazebo a `.dae` és `.stl` fájlokat. Amennyiben nem látjuk a .gazebo könyvtárat akkor láthatóá kell tenni a rejtett könyvtárakat is a számítógép beállításaiban.
+A színek megfelelő megjelenítéséhez egy megfelelő Gazebo modell is készült, amit az alapértelmezett Gazebo modellek telepítési könyvtárában kell elhelyezni, hogy megtalálja a modell behíváskor a gazebo a `.dae` és `.stl` fájlokat. Amennyiben nem látjuk a `.gazebo` könyvtárat akkor láthatóvá kell tenni a rejtett könyvtárakat is a számítógép beállításaiban.
 
 
   A sikeres futtatáshoz az alábbi fájlokat kell a pálya neve alatti Gazebo modell  könyvtárban létrehozni. A `Gazebo_modell` könyvtárban a `monaco` mappát kell ide beilleszteni:
@@ -66,3 +67,5 @@ A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, am
 # Képfeldolgozás OpenCV-vel
 
 # Szimuláció futtatása
+
+# Telepítési útmutató
