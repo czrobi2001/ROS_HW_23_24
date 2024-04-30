@@ -43,7 +43,7 @@ A versenypályát szintén Solidworks-ben egy letöltött, és importált kép s
 A színek megfelelő megjelenítéséhez egy megfelelő Gazebo modell is készült, amit az alapértelmezett Gazebo modellek telepítési könyvtárában kell elhelyezni, hogy megtalálja a modell behíváskor a gazebo a `.dae` és `.stl` fájlokat. Amennyiben nem látjuk a .gazebo könyvtárat akkor láthatóá kell tenni a rejtett könyvtárakat is a számítógép beállításaiban.
 
 
-  A sikeres futtatáshoz az alábbi fájlokat kell a pálya neve alatti Gazebo modell  könyvtárban létrehozni. A `Gazebo_modell` mappában `monaco` néven találjuk meg azt a modellt amit ide kell beilleszteni:
+  A sikeres futtatáshoz az alábbi fájlokat kell a pálya neve alatti Gazebo modell  könyvtárban létrehozni. A `Gazebo_modell` könyvtárban a `monaco` mappát kell ide beilleszteni:
 
   ![alt text][image3]
 
