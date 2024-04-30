@@ -40,7 +40,9 @@ A versenypályát szintén Solidworks-ben egy letöltött, és importált kép s
 
   ![alt text][image2] 
 
-A színek megfelelő megjelenítéséhez egy megfelelő Gazebo modell is készült, amit az alapértelmezett Gazebo modellek telepítési könyvtárában kell elhelyezni, hogy megtalálja a modell behíváskor a gazebo a .dae és .stl fájlokat.
+A színek megfelelő megjelenítéséhez egy megfelelő Gazebo modell is készült, amit az alapértelmezett Gazebo modellek telepítési könyvtárában kell elhelyezni, hogy megtalálja a modell behíváskor a gazebo a .dae és .stl fájlokat. Amennyiben nem látjuk a .gazebo könyvtárat akkor láthatóá kell tenni a rejtett könyvtárakat is a számítógép beállításaiban.
+
+!!! Fontos !!!
 
   A sikeres gazebo modell létrehozásáhaz az alábbi fájlokat kell a pálya neve alatti Gazbo modell  könyvtárban létrehozni:
 
