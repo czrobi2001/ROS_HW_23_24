@@ -60,7 +60,7 @@ A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, am
 
   ![alt text][image5]
 
-## Ackermann kormányzás
+# Ackermann kormányzás
 
 # Képfeldolgozás OpenCV-vel
 
