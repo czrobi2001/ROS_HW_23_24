@@ -72,6 +72,15 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        camera_link_optical:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         front_left_wheel:
           Alpha: 1
           Show Axes: false
@@ -109,6 +118,10 @@ Visualization Manager:
           Value: true
         base_link:
           Value: true
+        camera_link:
+          Value: true
+        camera_link_optical:
+          Value: true
         front_left_wheel:
           Value: true
         front_right_wheel:
@@ -126,6 +139,9 @@ Visualization Manager:
       Tree:
         base_footprint:
           base_link:
+            camera_link:
+              camera_link_optical:
+                {}
             front_left_wheel:
               {}
             front_right_wheel:
