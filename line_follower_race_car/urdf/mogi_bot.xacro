@@ -199,7 +199,7 @@
 
     <!-- Camera -->
   <joint type="fixed" name="camera_joint">
-    <origin xyz="0.300 -0.005 0.075" rpy="0 0 0"/>
+    <origin xyz="0.350 -0.005 0.075" rpy="0 0 0"/>
     <child link="camera_link"/>
     <parent link="base_link"/>
     <axis xyz="0 1 0" />
