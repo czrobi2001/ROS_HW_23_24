@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot>
 
-  <!-- Differential drive with odometry -->
+  <!--  Differential drive with odometry
   <gazebo>
     <plugin name="skid_steer_drive_controller" filename="libgazebo_ros_skid_steer_drive.so">
       <updateRate>10</updateRate>
@@ -31,7 +31,17 @@
       <covariance_yaw>0.0001</covariance_yaw>
       <broadcastTF>true</broadcastTF>
     </plugin>
-  </gazebo>
+  </gazebo> -->
+
+  <gazebo>
+      <!-- Load ros_control plugin using the steer_bot_hardware_gazebo
+      implementation of the hardware_interface::RobotHW -->
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>${robot_namespace}</robotNamespace>
+        <robotSimType>steer_bot_hardware_gazebo/SteerBotHardwareGazebo</robotSimType>
+        <legacyModeNS>false</legacyModeNS>
+      </plugin>
+    </gazebo>
 
   <!-- Camera -->
   <gazebo reference="camera_link">

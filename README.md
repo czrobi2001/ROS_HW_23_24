@@ -13,16 +13,19 @@ Robotrendszerek laboratórium tárgynak féléves projekt feladata, ahol ROS Noe
 A sikeres telepítéshez és futtatáshoz szükséges fontosabb lépések:
 
 # Tartalomjegyzék
-1. [Kezdőcsomag](#Kezdőcsomag)  
-2. [Versenyautó megtervezése](#Versenyautó-megtervezése)
-3. [Versenypálya](#Versenypálya)
-4. [Gazebo szimuláció](#Gazebo-szimuláció)
-5. [Alaklmazott szenzorok](#Alaklmazott-szenzorok)  
-5.1. [Kamera](#Kamera)
-6. [Ackermann kormányzás](#Ackerman-kormányzás)
-7. [Képfeldolgozás OpenCV-vel](#Képfeldolgozás-OpenCV-vel])
-8. [Szimuláció futtatása](#Szimuláció-futtatása)
-9. [Telepítési útmutató](#Telepítési-útmutató)
+- [Robotrendszerek laboratórium projekt feladat](#robotrendszerek-laboratórium-projekt-feladat)
+- [Vonalkövető versenyautó programozása](#vonalkövető-versenyautó-programozása)
+- [Tartalomjegyzék](#tartalomjegyzék)
+- [Kezdőcsomag](#kezdőcsomag)
+- [Versenyautó megtervezése](#versenyautó-megtervezése)
+- [Versenypálya](#versenypálya)
+- [Gazebo szimuláció](#gazebo-szimuláció)
+- [Alkalmazott szenzorok](#alkalmazott-szenzorok)
+  - [Kamera](#kamera)
+- [Ackermann kormányzás](#ackermann-kormányzás)
+- [Képfeldolgozás OpenCV-vel](#képfeldolgozás-opencv-vel)
+- [Szimuláció futtatása](#szimuláció-futtatása)
+- [Telepítési útmutató](#telepítési-útmutató)
 
 # Kezdőcsomag
 A kezdőcsomagban a tantárgy során használt plug-in-ket már tartalmazza, illetve az alapvető .launch fájlokat, amikkel megjeleníthetjük a robotot, pályát, illetve a kettőt egy térben.
@@ -63,9 +66,47 @@ A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, am
   ![alt text][image5]
 
 # Ackermann kormányzás
+  Az Ackermann kormányzás működtetéséhez az ackermann_steering_controller-t használtuk (telepítését ld. később). A controller irányításához a cmd_vel topic-ra érkező twist üzenetek szükségesek, melyek az első kerekek orientációját, és a hátsó kerekek sebességét képesek változtatni.
 
 # Képfeldolgozás OpenCV-vel
 
 # Szimuláció futtatása
 
 # Telepítési útmutató
+  (Noetic-re vonatkozó telepítési utasítások)
+  
+új:
+töltsük le az workspace src mappájába [ezt](https://github.com/srmainwaring/steer_bot) a git repot.
+Parancssorból:
+```console
+git clone https://github.com/srmainwaring/steer_bot?tab=readme-ov-file
+```
+
+Nézzük meg és telepítsük az esetleges dependencyket:
+```console
+cd ~/bme_catkin_ws
+rosdep check --from-paths src --ignore-src --rosdistro noetic
+rosdep install --from-paths src --ignore-src --rosdistro noetic -y
+```
+Ezt módosítottam...
+
+Majd végül futtassuk le a workspace gyökérkönyvtárában a catkin_make parancsot.
+
+
+
+  régi:
+  Telepítendő controller az Ackermann-kormányzáshoz elérhető [itt](https://github.com/ros-controls/ros_controllers). Illetve az alábbi parancs futtatásával:
+
+  ```console
+  git clone -b noetic-devel https://github.com/ros-controls/ros_controllers/
+  ```
+  (Sajnos a teljes repo telepítése nélkül nem ment...)
+
+  Valamint szükséges a four_wheel_steering_msgs üzenettípusok és a urdf_geometry_parser telepítése az alábbi kommandokkal:
+
+  ```console
+  git clone https://github.com/ros-drivers/four_wheel_steering_msgs
+
+  git clone https://github.com/ros-controls/urdf_geometry_parser
+  ```
+

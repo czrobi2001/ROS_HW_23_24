@@ -15,11 +15,34 @@
   <arg name="pitch" default="0"/>
   <arg name="yaw" default="1.027"/>
 
+  <!-- Namespace -->
+  <arg name="namespace" default="/line_follower_race_car" />
+
+  <group ns="$(arg namespace)">
+
   <!-- Launch our Gazebo world -->
   <include file="$(find line_follower_race_car)/launch/world.launch"/>
 
   <!-- Find mogi_bot description and send urdf to param server -->
   <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+
+  <!-- Load ros_controllers configuration parameters -->
+        <rosparam file="$(find racecar_control)/config/ctrl_ackermann_steering_controller.yaml" command="load" ns="$(arg namespace)" /> 
+        <rosparam file="$(find racecar_control)/config/ctrl_gains.yaml" command="load" ns="$(arg namespace)" /> 
+        <rosparam file="$(find racecar_control)/config/ctrl_joint_state_publisher.yaml" command="load" ns="$(arg namespace)" />
+        <rosparam file="$(find racecar_control)/config/ctrl_steer_bot_hardware_gazebo.yaml" command="load" ns="$(arg namespace)" /> 
+
+  <!-- Spawn the controllers -->
+        <node pkg="controller_manager" type="spawner" name="controller_spawner" ns="$(arg namespace)"
+            args="joint_state_publisher ackermann_steering_controller"
+            output="screen" respawn="false" />
+
+  <!-- Launch a rqt steering GUI for publishing to /steer_bot/steer_drive_controller/cmd_vel -->
+        <node pkg="rqt_robot_steering" type="rqt_robot_steering" name="rqt_robot_steering" >
+            <param name="default_topic" value="(arg namespace)/ackermann_steering_controller/cmd_vel"/>
+        </node> 
+  
+
 
   <!-- Send joint values-->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
@@ -43,5 +66,6 @@
     <param name="source_frame_name" value="base_footprint"/>
     <param name="target_frame_name" value="odom"/>
   </node>
+  </group>
 
 </launch>

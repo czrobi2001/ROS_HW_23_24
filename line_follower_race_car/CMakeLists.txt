@@ -14,6 +14,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  roslaunch
+  urdf
+  xacro
 )
 
 ## System dependencies are found with CMake's conventions
@@ -160,6 +163,14 @@ include_directories(
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
+install(DIRECTORY launch urdf
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(DIRECTORY config launch
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 # catkin_install_python(PROGRAMS
@@ -205,5 +216,12 @@ include_directories(
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
 
+if (CATKIN_ENABLE_TESTING)
+    roslaunch_add_file_check(launch)
+endif()
+
+if (CATKIN_ENABLE_TESTING)
+    roslaunch_add_file_check(launch)
+endif()
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
