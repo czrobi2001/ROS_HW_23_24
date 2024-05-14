@@ -5,14 +5,14 @@
  -->
 <launch>
     <!-- Load robot description -->
-    <include file="$(find steer_bot_description)/launch/description.launch" >
+    <include file="$(find line_follower_race_car)/launch/description.launch" >
     </include>
-
+    
     <!-- Load controller parameters -->
-    <rosparam command="load" file="$(find steer_bot_control)/config/ctrl_ackermann_steering_controller.yaml" />
-    <rosparam command="load" file="$(find steer_bot_control)/config/ctrl_gains.yaml" />
-    <rosparam command="load" file="$(find steer_bot_control)/config/ctrl_joint_state_publisher.yaml" />
-    <rosparam command="load" file="$(find steer_bot_control)/config/ctrl_steer_bot_hardware_gazebo.yaml" />
+    <rosparam command="load" file="$(find line_follower_race_car)/config/ctrl_ackermann_steering_controller.yaml" />
+    <rosparam command="load" file="$(find line_follower_race_car)/config/ctrl_gains.yaml" />
+    <rosparam command="load" file="$(find line_follower_race_car)/config/ctrl_joint_state_publisher.yaml" />
+    <rosparam command="load" file="$(find line_follower_race_car)/config/ctrl_steer_bot_hardware_gazebo.yaml" />
 
     <!-- Spawn the controllers -->
     <node pkg="controller_manager" type="spawner" name="base_controller_spawner"

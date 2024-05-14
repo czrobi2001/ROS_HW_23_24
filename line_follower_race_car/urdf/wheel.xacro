@@ -9,8 +9,8 @@
 -->
 <robot name="wheel" xmlns:xacro="http://wiki.ros.org/xacro">
   <!-- Include xacro for materials and inertials -->
-  <xacro:include filename="$(find racecar_description)/urdf/materials.xacro"/>
-  <xacro:include filename="$(find racecar_description)/urdf/inertials.xacro"/>
+  <xacro:include filename="$(find line_follower_race_car)/urdf/materials.xacro"/>
+  <xacro:include filename="$(find line_follower_race_car)/urdf/inertials.xacro"/>
 
   <!-- Properties -->
   <xacro:property name="steer_effort" value="10.0"/>
@@ -125,16 +125,16 @@
 
     <link name="${name}_wheel_link">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
         <geometry>
-          <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
+          <mesh filename = "package://line_follower_race_car/meshes/front_wheels.dae"/>
         </geometry>
         <material name="red" />
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
         <geometry>
-          <mesh filename = "package://line_follower_race_car/meshes/front_wheels.dae"/>
+          <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
         </geometry>
       </collision>
       <xacro:solid_cylinder_inertial 
@@ -146,8 +146,8 @@
     <joint name="${name}_wheel_joint" type="continuous">
       <parent link="${name}_steer_link"/>
       <child link="${name}_wheel_link"/>
-      <origin xyz="0 0 ${-steer_height}" rpy="${-90 * deg_to_rad} 0 0"/>
-      <axis xyz="0 0 1"/>
+      <origin xyz="0 0 ${-steer_height}" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
     </joint>
 
     <transmission name="${name}_steer_joint_trans">
@@ -176,10 +176,12 @@
       <material>Gazebo/Blue</material>
     </gazebo>
     
+    <!--
     <gazebo reference="${name}_wheel_link">
       <material>Gazebo/Red</material>
-    </gazebo>
+    </gazebo> -->
   </xacro:macro>
+
 
   <!-- Bicycle model rear wheel link (required for steer_drive_controller) -->
   <xacro:macro name="rear_wheel"
@@ -233,6 +235,7 @@
     </gazebo>
   </xacro:macro>
 
+
   <!-- Bicycle model front wheel link (passive - no transmission) -->
   <xacro:macro name="front_wheel"
     params="
@@ -278,6 +281,7 @@
     </gazebo>
   </xacro:macro>
 
+
   <!-- Car steering model rear wheel links (left/right) -->
   <xacro:macro name="rear_wheel_lr"
     params="
@@ -291,9 +295,9 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
+          <mesh filename = "package://line_follower_race_car/meshes/front_wheels.dae"/>
         </geometry>
-        <material name="red" />
+        <!--<material name="red" />-->
       </visual>
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -325,8 +329,9 @@
       </joint>
     </transmission>
 
+    <!--
     <gazebo reference="${name}_wheel_link">
       <material>Gazebo/Red</material>
-    </gazebo>
+    </gazebo> -->
   </xacro:macro>
 </robot>
