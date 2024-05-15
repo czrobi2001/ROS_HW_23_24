@@ -41,7 +41,7 @@ A versenypályát szintén Solidworks-ben egy letöltött, és importált kép s
 Blenderbe beimportálva készítettem egy a gazebo által is feldolgozható collada mesht, a színek megfelelő megjelenítése érdekében. Ahhoz, hogy a Gazebo megnyitáskor lássa a modellt, az alábbi sort kell a `.bashrc` hozzá adni.
 
 ```console
-export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/bme_catkin_ws/src/KogRob_HW_23_24/gazebo_models
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/bme_catkin_ws/src/ROS_HW_23_24/gazebo_models
 ```
 
 # Gazebo szimuláció
