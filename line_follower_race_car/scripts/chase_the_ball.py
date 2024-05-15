@@ -65,10 +65,11 @@ class cvThread(threading.Thread):
                 rospy.signal_shutdown('Quit')
 
     def processImage(self, img):
-
+        # Get thet number of rows and columns of the image
         rows,cols = img.shape[:2]
 
-        R,G,B = self.convert2rgb(img)
+        # Get the values of R, G, B channels
+        R, G, B = self.convert2rgb(img)
 
         redMask = self.thresholdBinary(R, (220, 255))
         stackedMask = np.dstack((redMask, redMask, redMask))
@@ -80,7 +81,6 @@ class cvThread(threading.Thread):
 
         # Find the biggest contour (if detected)
         if len(contours) > 0:
-            
             c = max(contours, key=cv2.contourArea)
             M = cv2.moments(c)
 
@@ -101,18 +101,15 @@ class cvThread(threading.Thread):
             cv2.line(crosshairMask,(int(cols/2),0),(int(cols/2),rows),(255,0,0),10)
 
             # Chase the ball
-            #print(abs(cols - cx), cx, cols)
             if abs(cols/2 - cx) > 20:
                 self.cmd_vel.linear.x = 0
                 if cols/2 > cx:
                     self.cmd_vel.angular.z = 0.2
                 else:
                     self.cmd_vel.angular.z = -0.2
-
             else:
                 self.cmd_vel.linear.x = 0.2
                 self.cmd_vel.angular.z = 0
-
         else:
             self.cmd_vel.linear.x = 0
             self.cmd_vel.angular.z = 0
@@ -123,7 +120,7 @@ class cvThread(threading.Thread):
         # Return processed frames
         return redMask, contourMask, crosshairMask
 
-    # Convert to RGB channels
+    # Get the values of RGB channels
     def convert2rgb(self, img):
         R = img[:, :, 2]
         G = img[:, :, 1]

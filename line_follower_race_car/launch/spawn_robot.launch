@@ -13,7 +13,7 @@
   <arg name="z" default="0.1"/>
   <arg name="roll" default="0"/>
   <arg name="pitch" default="0"/>
-  <arg name="yaw" default="1.027"/>
+  <arg name="yaw" default="-0.57"/>
 
   <!-- Launch our Gazebo world -->
   <include file="$(find line_follower_race_car)/launch/world.launch"/>
