@@ -82,7 +82,7 @@ A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, am
 
   Módosítást hajtottunk végre azonban a kamera felszerelésénél, ugyanis 45°-ban megdöntöttük a vízszinteshez képest. Ennek oka, hogy így a későbbiekben a képfeldolgozás során a robot irányítása sokkal pontosabban tehető meg.
 
-  <img src="./assets/rqt_cam.png" width="200"/> <img src="./assets/rqt_cam_45.png" width="200"/> 
+  <img src="./assets/rqt_cam.png" width="300"/> <img src="./assets/rqt_cam_45.png" width="300"/> 
   
   Baloldalt a kezdeti, jobboldalt a megdöntött kamerakép látható.
   
