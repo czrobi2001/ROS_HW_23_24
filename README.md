@@ -55,7 +55,25 @@ A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, am
 
 ## Kamera
 
-  Kamera plug-in
+  A kamerát az alábbi plugin valósítja meg. Itt nem hajtottunk végre semmilyen extra módosítást, alapvetően az órán használt kódot vettük alapul.
+  ```xml
+  <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+    <alwaysOn>true</alwaysOn>
+    <updateRate>0.0</updateRate>
+    <cameraName>head_camera</cameraName>
+    <imageTopicName>image_raw</imageTopicName>
+    <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+    <frameName>camera_link_optical</frameName>
+    <hackBaseline>0.07</hackBaseline>
+    <distortionK1>0.0</distortionK1>
+    <distortionK2>0.0</distortionK2>
+    <distortionK3>0.0</distortionK3>
+    <distortionT1>0.0</distortionT1>
+    <distortionT2>0.0</distortionT2>
+  </plugin>
+  ```
+
+  Módosítást hajtottunk végre azonban a kamera felszerelésénél, ugyanis 45°-ban megdöntöttük a vízszinteshez képest. Ennek oka, hogy így a későbbiekben a képfeldolgozás során a robot irányítása sokkal pontosabban tehető meg.
 
   ![alt text][image5]
 
@@ -63,7 +81,82 @@ A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, am
 
   Alkalmazott plug-in
 
-# Képfeldolgozás OpenCV-vel
+# Képfeldolgozás
+A képfeldolgozást [OpenCV](https://opencv.org/ "OpenCV") segítségével tettük meg.  
+
+## Képfeldolgozás lépései
+A robot irányításáért a `follow_curve.py` nevű Python script felel, ennek a működése a következő:  
+1. a kamerakép alapján egy bináris kép készítése, amin a pályát képező pixelek lesznek 1 (v. 255) értékűek
+    * először a kapott képett HSV (Hue-Saturation-Value) színtérbe konvertáljuk   
+    ```python
+    hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    ```  
+    * definiálunk egy alsó (`hsv(20, 100, 100)`) és felső (`hsv(30, 255, 255)`) határértéket, amik között a pálya színét keressük
+    * elvégezzük a binarizálást
+    ```python
+    mask = cv2.inRange(hsv, lower_yellow, upper_yellow)
+    ```
+
+2. kontúrok keresésése a bináris képen
+    * erre a célra az OpenCV `findContours()` függvényét alkalmaztuk, ami visszadaja a képen található kontúrokat
+    * első lépésben megvizsgáljuk, hogy a képen található-e kontúr (ha nem, akkor a robot nem indul el)
+    * legnagyobb kontúr kiválasztása és annak a középpontjának a meghatározása
+    ```python
+    max_contour = max(contours, key=cv2.contourArea) # find the biggest contour
+
+    M = cv2.moments(max_contour)
+    cx = int(M["m10"] / M["m00"]) # x coord of center point
+    cy = int(M["m01"] / M["m00"]) # y coord of center point
+    ```
+
+3. "gépi látás" megjelenítése
+    * 3 feldolgozott kép egymás melletti megjelenítése a kameraképen, ezek:
+    * az 1. pontban létrehozott bináris kép
+    * a 2. pontban megtalált kontúrnak a körvonala
+    * a 2. pontban meghatározott legnagyobb kontúr középpontjának és a kamerakép közepe közötti távolság vizualizációja
+
+4. robot irányításához szükséges paraméterek meghatározása
+    * ezek a paraméterek a robot sebessége az x-tengelye mentén (`linear.x`) és az elfordulása a z-tengelye mentén (`angular.z`)
+    * a paraméterek meghatározása a kamerakép x-tengely menti középpontja (`cols/2`) és a talált legnagyobb kontúr x-tengely menti középpontja (`cx`) alapján, valamint tesztelések alapján történt, végül az alábbi megoldás vált be a legjobban:
+    ```python
+    if abs(cols/2 - cx) >= 20:            # distance >= 20 px
+      self.cmd_vel.linear.x = 0.05        # apply 0.05 speed
+      if cols/2 > cx:                     # rotate in positive direction
+        self.cmd_vel.angular.z = 0.2      # apply 0.2 rotation
+      else:                               # rotate in negative direction
+        self.cmd_vel.angular.z = -0.2     # apply -0.2 rotation
+    if abs(cols/2 - cx) >= 50:            # distance >= 50 px
+      self.cmd_vel.linear.x = 0.05
+      if cols/2 > cx:
+        self.cmd_vel.angular.z = 0.5
+      else:
+        self.cmd_vel.angular.z = -0.5
+    if abs(cols/2 - cx) >= 100:           # distance >= 100 px
+      self.cmd_vel.linear.x = 0
+      if cols/2 > cx:
+        self.cmd_vel.angular.z = 1
+      else:
+        self.cmd_vel.angular.z = -1
+    else:                                # distance < 20 px
+      self.cmd_vel.linear.x = 0.5
+      self.cmd_vel.angular.z = 0
+    ```
+5. a meghatározott paraméterek közlése
+    * a paramétereket a *cmd_vel* topic-ba küldjük `Twist` üzenet formájában
+
+## Nehézségek a képfeldolgozás során
+Sok-sok kísérletezést követően eljutottunk oda, hogy a robot képes végighaladni a teljes pályán hiba nélkül, egész jó tempóban. A korábbi verziókban az alábbi hibák álltak fenn:
+1. a kanyarokat nagyon lassan veszi be
+2. visszafordító kanyarokban elhagyja a pályát
+
+## A problémák megoldása
+Az előző részben említett problémákra végül a következő megoldásokat eszközöltük:
+1. több határértéket is felvettünk a kamerakép és a kontúr középpontja közötti távolság alapján és ezen távolságnak megfelelően vettük fel a sebesség és elfordulás mértéket (a pontos sebesség és elfordulás értékek tesztelések során lettek meghatározva)
+2. a problémát az idézte elő, hogy a kameraképen nagyon előrefelé lehetett csak látni (ekkor még a vízszintes síkkal párhuzamosan volt felszerelve), emiatt amikor egy visszafordító kanyarhoz ért a robot, akkor sokszor a pálya robot alatti része kikerült a képből és egy másik, távolabbi kontúr került a célpontjába - erre a megoldást a kamera megdöntése jelentette -45°-ban a vízszinteshez képest 
+
+## Az alkalmazott megoldások hátrányai
+1. az meghatározott határértékek alapvetően a jelenlegi pálya alapján lettek kikísérletezve, így nem garantálható, hogy minden más esetben megfelleően fog működni
+2. így csak a pályának a közvetlenül a robot előtti része látható, emiatt a későbbi fejlesztések nehezebbek lehetnek, ha a pálya későbbi részeinek megfelelően szeretnénk mondjuk egy adott ívett követni vagy egy meghatározott sebesség görbét, hogy a robot köridejét javítsuk a pályán
 
 # Szimuláció futtatása
 
