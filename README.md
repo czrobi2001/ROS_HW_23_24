@@ -82,8 +82,7 @@ A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, am
 
   Módosítást hajtottunk végre azonban a kamera felszerelésénél, ugyanis 45°-ban megdöntöttük a vízszinteshez képest. Ennek oka, hogy így a későbbiekben a képfeldolgozás során a robot irányítása sokkal pontosabban tehető meg.
 
-  <img src="./assets/rqt_cam.png" width="250"/>
-  <img src="./assets/rqt_cam_45.png" width="250"/> 
+  <img src="./assets/rqt_cam.png" width="200"/> <img src="./assets/rqt_cam_45.png" width="200"/> 
   
   Baloldalt a kezdeti, jobboldalt a megdöntött kamerakép látható.
   
@@ -171,7 +170,7 @@ Az előző részben említett problémákra végül a következő megoldásokat 
   Alkalmazott plug-in
 
 # Szimuláció futtatása
-A szimuláció elindításhoz először a mobil robotot kell megnyitni gazebo-ban, amihez az alábbi paranccsal tehetünk meg.
+A szimuláció elindításhoz először a mobil robotot kell megnyitni gazebo-ban, amit az alábbi paranccsal tehetünk meg.
   ```console
   roslaunch line_follower_race_car spawn_robot.launch
   ```
