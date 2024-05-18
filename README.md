@@ -24,12 +24,12 @@ A projektet készített:
 5.1. [RViz szimuláció](#rviz-szimuláció)
 6. [Alaklmazott szenzorok](#alkalmazott-szenzorok)  
 6.1. [Kamera](#kamera)
-5. [Kormányzás](#kormányzás)
-6. [Képfeldolgozás](#képfeldolgozás)  
-6.1. [Képfeldolgozás lépései](#képfeldolgozás-lépései)  
-6.2. [Nehézségek a képfeldolgozás során](#nehézségek-a-képfeldolgozás-során)  
-6.3 .[A problémák megoldása](#a-problémák-megoldása)  
-6.4. [Az alkalmazott megoldások hátrányai](#az-alkalmazott-megoldások-hátrányai)
+7. [Kormányzás](#kormányzás)
+8. [Képfeldolgozás](#képfeldolgozás)  
+8.1. [Képfeldolgozás lépései](#képfeldolgozás-lépései)  
+8.2. [Nehézségek a képfeldolgozás során](#nehézségek-a-képfeldolgozás-során)  
+8.3 .[A problémák megoldása](#a-problémák-megoldása)  
+8.4. [Az alkalmazott megoldások hátrányai](#az-alkalmazott-megoldások-hátrányai)
 
 ## Feladatleírás
 A feladat megvalósítása során a következő pontoknak kellett eleget tennünk:
@@ -53,7 +53,7 @@ git clone https://github.com/czrobi2001/ROS_HW_23_24.git
     * 2
     * ...
 
-A lépések teljesítésével már képesek leszünk a szimuláviót futtatni. Ennek a lépéseit a követkeező fejezet tartalmazza.
+A lépések teljesítésével már képesek leszünk a szimulációt futtatni. Ennek a lépéseit a követkeező fejezet tartalmazza.
 
 ## Szimuláció futtatása
 A szimuláció elindításhoz először a mobil robotot kell megnyitni **gazebo**-ban, amit az alábbi paranccsal tehetünk meg.
@@ -74,11 +74,10 @@ Ha az irányításhoz használt paraméterekre is kíváncsiak vagyunk, akkor eg
 Miután megnyílt az **rqt** a Plugins > Topics > Topic Monitor menüpontra kattintás után keressük ki a *cmd_vel* topicot és pipáljuk be. Ezen belül a *linear* és *angular* opciókat lenyitva láthatók a pontos értékek.
 
 ## Versenypálya megtervezése
-A versenypályát Solidworks-ben egy letöltött, és importált kép segítségével terveztem meg, aminek kontúrját körberajzoltam Besier görbékkel, és kiexportáltam egy `.stl` fájlt.
+A versenypályát Solidworks-ben egy letöltött, és importált kép segítségével terveztük meg, aminek kontúrját körberajzoltam Besier görbékkel, és kiexportáltam egy `.stl` fájlt.
 
 A pálya kontrúja
-
-  ![alt text][image2] 
+![alt text][image2] 
 
 Blenderbe beimportálva készítettem egy a gazebo által is kezelhető collada mesht, ami tartalmazza a blenderben beállított színeket is. Ahhoz, hogy a Gazebo megnyitáskor lássa a modellt, az alábbi sort kell a `.bashrc`-hez hozzá adni.
 
@@ -101,7 +100,7 @@ A kocsi beimportálása a világba a `spawn_robot.launch` fájl elindításával
 
 
 ## Versenyautó megtervezése
-A versenyautó tervezésnék ötletét internetes forrásból vettem, ami egy kis lego kocsi, amit Solidworks-ben az egyszerűbb kezelhetőség érdekében módosítottam.
+A versenyautó tervezésnék ötletét internetes forrásból vettük, ami egy kis lego kocsi, amit Solidworks-ben az egyszerűbb kezelhetőség érdekében módosítottam.
 
   ![alt text][image1]
 
