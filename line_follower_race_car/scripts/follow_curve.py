@@ -36,14 +36,14 @@ class cvThread(threading.Thread):
 	https://github.com/ros-perception/image_pipeline/issues/85
 	"""
 	def __init__(self, queue):
-			threading.Thread.__init__(self)
-			self.queue = queue
-			self.image = None
+		threading.Thread.__init__(self)
+		self.queue = queue
+		self.image = None
 
-			# Initialize published Twist message
-			self.cmd_vel = Twist()
-			self.cmd_vel.linear.x = 0
-			self.cmd_vel.angular.z = 0
+		# Initialize published Twist message
+		self.cmd_vel = Twist()
+		self.cmd_vel.linear.x = 0
+		self.cmd_vel.angular.z = 0
 
 	def run(self):
 		# Create a single OpenCV window
@@ -63,23 +63,19 @@ class cvThread(threading.Thread):
 			# Check for 'q' key to exit
 			k = cv2.waitKey(6) & 0xFF
 			if k in [27, ord('q')]:
-					rospy.signal_shutdown('Quit')
+				rospy.signal_shutdown('Quit')
 
 	def processImage(self, img):
 		# Get thet number of rows and columns of the image
 		rows,cols = img.shape[:2]
 
-		# Get the values of R, G, B channels
-		R, G, B = self.convert2rgb(img)
-
-		# redMask = self.thresholdBinary(R, (220, 255))
-		redMask = self.thresholdBinary(img)
-		stackedMask = np.dstack((redMask, redMask, redMask))
+		yellowMask = self.thresholdBinary(img)
+		stackedMask = np.dstack((yellowMask, yellowMask, yellowMask))
 		contourMask = stackedMask.copy()
 		crosshairMask = stackedMask.copy()
 
 		# return value of findContours depends on OpenCV version
-		(contours,hierarchy) = cv2.findContours(redMask.copy(), 1, cv2.CHAIN_APPROX_NONE)
+		contours,_ = cv2.findContours(yellowMask.copy(), 1, cv2.CHAIN_APPROX_NONE)
 
 		# Find the biggest contour (if detected)
 		if len(contours) > 0:
@@ -88,52 +84,47 @@ class cvThread(threading.Thread):
 
 			# Make sure that "m00" won't cause ZeroDivisionError: float division by zero
 			if M["m00"] != 0:
-					cx = int(M["m10"] / M["m00"])
-					cy = int(M["m01"] / M["m00"])
+				cx = int(M["m10"] / M["m00"])
+				cy = int(M["m01"] / M["m00"])
 			else:
-					cx, cy = 0, 0
+				cx, cy = 0, 0
 
 			# Show contour and centroid
-			cv2.drawContours(contourMask, contours, -1, (0,255,0), 10)
-			cv2.circle(contourMask, (cx, cy), 5, (0, 255, 0), -1)
+			cv2.drawContours(contourMask, contours, -1, (40,164,182), 10)
+			cv2.circle(contourMask, (cx, cy), 10, (40,164,182), -1)
 
 			# Show crosshair and difference from middle point
-			cv2.line(crosshairMask,(cx,0),(cx,rows),(0,0,255),10)
-			cv2.line(crosshairMask,(0,cy),(cols,cy),(0,0,255),10)
-			cv2.line(crosshairMask,(int(cols/2),0),(int(cols/2),rows),(255,0,0),10)
+			cv2.line(crosshairMask,(cx,0),(cx,rows),(40,164,182),10) # middle of the contour
+			cv2.line(crosshairMask,(0,cy),(cols,cy),(40,164,182),10) # middle of the contour
+			cv2.line(crosshairMask,(int(cols/2),0),(int(cols/2),rows),(120,120,120),10) # middle of the camera
 
-			print("Distance from center: %d" % (cols/2 - cx))
+			# print("Distance from center: %d" % (cols/2 - cx))
 
-			# min_speed = 0.05
-			# max_speed = 10
-
-			# d = abs(cols/2 - cx)
-			# speed = 10 / d
-			# speed = min(speed, max_speed)
-
-			# Follow the line
+			# Apply speed and rotation based on the distance from the center
 			if abs(cols/2 - cx) >= 20:
 				self.cmd_vel.linear.x = 0.05
 				if cols/2 > cx:
 					self.cmd_vel.angular.z = 0.2
 				else:
 					self.cmd_vel.angular.z = -0.2
+
 			if abs(cols/2 - cx) >= 50:
 				self.cmd_vel.linear.x = 0.05
 				if cols/2 > cx:
 					self.cmd_vel.angular.z = 0.5
 				else:
 					self.cmd_vel.angular.z = -0.5
+
 			if abs(cols/2 - cx) >= 100:
 				self.cmd_vel.linear.x = 0
 				if cols/2 > cx:
 					self.cmd_vel.angular.z = 1
 				else:
 					self.cmd_vel.angular.z = -1
-			else:
+			else: # Distance is <20
 				self.cmd_vel.linear.x = 0.5
 				self.cmd_vel.angular.z = 0
-		else:
+		else: # If no contour is detected, stop the robot
 			self.cmd_vel.linear.x = 0
 			self.cmd_vel.angular.z = 0
 
@@ -141,28 +132,13 @@ class cvThread(threading.Thread):
 		pub.publish(self.cmd_vel)
 
 		# Return processed frames
-		return redMask, contourMask, crosshairMask
-
-	# Get the values of RGB channels
-	def convert2rgb(self, img):
-			R = img[:, :, 2]
-			G = img[:, :, 1]
-			B = img[:, :, 0]
-
-			return R, G, B
-
-	# Apply threshold and result a binary image
-	# def thresholdBinary(self, img, thresh=(200, 255)):
-	#     binary = np.zeros_like(img)
-	#     binary[(img >= thresh[0]) & (img <= thresh[1])] = 1
-
-	#     return binary*255
+		return yellowMask, contourMask, crosshairMask
 	
 	def thresholdBinary(self, image):
 		# Convert the image to HSV color space
 		hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 			
-		# Define the range for the color yellow
+		# Define the range for the color of the track (yellow)
 		lower_yellow = np.array([20, 100, 100])
 		upper_yellow = np.array([30, 255, 255])
 			

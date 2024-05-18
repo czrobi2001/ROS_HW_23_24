@@ -9,10 +9,8 @@
 # Robotrendszerek laboratórium projekt feladat
 Robotrendszerek laboratórium tárgynak féléves projekt feladata, ahol ROS Noetic környezetben fejlesztettünk egy mobil robotot.
 
-# Vonalkövető versenyautó programozása
-A sikeres telepítéshez és futtatáshoz szükséges fontosabb lépések:
-
-# Tartalomjegyzék
+## Tartalomjegyzék
+1. [Feladatleírás](##Feladatleírás)
 1. [Versenyautó megtervezése](#Versenyautó-megtervezése)
 2. [Versenypálya](#Versenypálya)
 3. [Gazebo szimuláció](#Gazebo-szimuláció)
@@ -22,6 +20,15 @@ A sikeres telepítéshez és futtatáshoz szükséges fontosabb lépések:
 6. [Képfeldolgozás OpenCV-vel](#Képfeldolgozás-OpenCV-vel])
 7. [Szimuláció futtatása](#Szimuláció-futtatása)
 8. [Telepítési útmutató](#Telepítési-útmutató)
+
+## Feladatleírás
+A feladat megvalósítása során a következő pontoknak kellett eleget tennünk:
+* méretarányosan kicsinyített versenypálya készítése,
+* versenyautó modell készítése,
+* a robot autonóm vezetése saját ROS node segítségével.
+
+## Vonalkövető versenyautó programozása
+A sikeres telepítéshez és futtatáshoz szükséges fontosabb lépések:
 
 
 # Versenyautó megtervezése
