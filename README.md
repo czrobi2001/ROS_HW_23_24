@@ -15,6 +15,7 @@ A projektet készített:
 * Kurucz István
 
 ## Tartalomjegyzék
+<<<<<<< Updated upstream
 1. [Feladatleírás](#feladatleírás)
 2. [Telepítési útmutató](#telepítési-útmutató)
 3. [Szimuláció futtatása](#szimuláció-futtatása)
@@ -30,6 +31,25 @@ A projektet készített:
 8.2. [Nehézségek a képfeldolgozás során](#nehézségek-a-képfeldolgozás-során)  
 8.3 .[A problémák megoldása](#a-problémák-megoldása)  
 8.4. [Az alkalmazott megoldások hátrányai](#az-alkalmazott-megoldások-hátrányai)
+=======
+- [Robotrendszerek laboratórium projekt feladat](#robotrendszerek-laboratórium-projekt-feladat)
+  - [Tartalomjegyzék](#tartalomjegyzék)
+  - [Feladatleírás](#feladatleírás)
+  - [Telepítési útmutató](#telepítési-útmutató)
+  - [Szimuláció futtatása](#szimuláció-futtatása)
+  - [Versenypálya megtervezése](#versenypálya-megtervezése)
+    - [Gazebo szimuláció](#gazebo-szimuláció)
+  - [Versenyautó megtervezése](#versenyautó-megtervezése)
+    - [RViz szimuláció](#rviz-szimuláció)
+  - [Alkalmazott szenzorok](#alkalmazott-szenzorok)
+    - [Kamera](#kamera)
+  - [Kormányzás](#kormányzás)
+  - [Képfeldolgozás](#képfeldolgozás)
+    - [Képfeldolgozás lépései](#képfeldolgozás-lépései)
+    - [Nehézségek a képfeldolgozás során](#nehézségek-a-képfeldolgozás-során)
+    - [A problémák megoldása](#a-problémák-megoldása)
+    - [Az alkalmazott megoldások hátrányai](#az-alkalmazott-megoldások-hátrányai)
+>>>>>>> Stashed changes
 
 ## Feladatleírás
 A feladat megvalósítása során a következő pontoknak kellett eleget tennünk:
@@ -39,16 +59,24 @@ A feladat megvalósítása során a következő pontoknak kellett eleget tennün
 
 ## Telepítési útmutató
 1. A repositoryt az alábbi paranccsal tudjuk megszerezni:
+<<<<<<< Updated upstream
 ```console
 git clone https://github.com/czrobi2001/ROS_HW_23_24.git
 ```
 2. XServer telepítése (grafikus alkalmazás futtatása miatt)
+=======
+    ```console
+    git clone https://github.com/czrobi2001/ROS_HW_23_24.git
+    ```
+2. WSL használata esetén: XServer telepítése (grafikus alkalmazás futtatása miatt)
+>>>>>>> Stashed changes
     * a telepítés megtehető például a következő linkre kattintva: [XServer](https://sourceforge.net/projects/vcxsrv/)
     * XServer konfigurálása: Az *Extra settings* oldalon pipáljuk be a *Disable access control* opciót, valamint az *Additional parameters for VcXsrx* felirítú mezőbe gépeljük be a következők:
     ```console
     -nowgl
     ```
 3. Szükséges függőségek (dependency) telepítése:
+<<<<<<< Updated upstream
     * 1
     * 2
     * ...
@@ -87,6 +115,63 @@ export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/bme_catkin_ws/src/ROS_HW_23_24/gaz
 
 ### Gazebo szimuláció
 
+=======
+   
+    * Pythonhoz a scipy könytár az alábbi parancs segítségével:
+    ```console
+    pip install scipy
+    ```
+    *  Az alábbi ROS package-ek:
+       *  `std_msgs`
+       * `actionlib`
+       * `actionlib_msgs`
+       * `roscpp`
+       * `rospy`
+       * `message_generation`
+       * `message_runtime`
+  
+    Ezek telepíthetők, az alábbi paranccsal:
+    ```console
+    rosdep install -y --from-paths src --ignore-src --rosdistro noetic -r
+    ```
+
+  4. Legvégül futtassuk le a workspace gyökérkönyvtárában a `catkin_make` parancsot.
+
+A lépések teljesítésével már képesek leszünk a szimulációt futtatni. Ennek a lépéseit a követkeező fejezet tartalmazza.
+
+## Szimuláció futtatása
+A szimuláció elindításhoz először a mobil robotot kell megnyitni **gazebo**-ban, amit az alábbi paranccsal tehetünk meg.
+  ```console
+  roslaunch line_follower_race_car spawn_robot.launch
+  ```
+
+Majd miután elindult a szimuláció elindíthatjuk a `follow_curve.py` scriptet, ami a képfeldogozást végzi.
+  ```console
+  rosrun line_follower_race_car follow_curve.py
+  ```
+
+Ha az irányításhoz használt paraméterekre is kíváncsiak vagyunk, akkor egy 3. terminál ablakba írjuk be a következőt:
+  ```console
+  rqt
+  ```
+
+Miután megnyílt az **rqt** a Plugins > Topics > Topic Monitor menüpontra kattintás után keressük ki a *cmd_vel* topicot és pipáljuk be. Ezen belül a *linear* és *angular* opciókat lenyitva láthatók a pontos értékek.
+
+## Versenypálya megtervezése
+A versenypályát Solidworks-ben egy letöltött, és importált kép segítségével terveztük meg, aminek kontúrját körberajzoltam Besier görbékkel, és kiexportáltam egy `.stl` fájlt.
+
+A pálya kontrúja
+![alt text][image2] 
+
+Blenderbe beimportálva készítettem egy a gazebo által is kezelhető collada mesht, ami tartalmazza a blenderben beállított színeket is. Ahhoz, hogy a Gazebo megnyitáskor lássa a modellt, az alábbi sort kell a `.bashrc`-hez hozzá adni.
+
+```console
+export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/bme_catkin_ws/src/ROS_HW_23_24/gazebo_models
+```
+
+### Gazebo szimuláció
+
+>>>>>>> Stashed changes
 A modellt a szimulációs környezetben, vagyis a **gazebo**-ban is megtekinthetjük, ehhez az alábbi parancsot futtassuk:
 ```console
 roslaunch line_follower_race_car world.launch 
@@ -161,6 +246,35 @@ Végül a feladatot a `skid-steer` kormányzással valósítottuk meg. Az erre a
   </plugin>
 </gazebo>
 ```
+<<<<<<< Updated upstream
+=======
+A controller a `/cmd_vel` topicról olvas twist típusú üzeneteket, melyeket felhasználva a robot bal és jobboldali kerekeit kezeli, gyakorlatilag differenciálhajtásként. A haladáshoz szükséges a súrlódás megfelelő szimulációja. Ehhez a `mogi_bot.xacro` fileban a kerekek súrlódási tényezői minden kerék esetén, a következőképp lettek beállítva:
+```xml
+<gazebo reference="front_left_wheel">
+    <!-- kp and kd for rubber -->
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <mu1>1.5</mu1>
+    <mu2>1.5</mu2>
+    <fdir1>1 0 0</fdir1>
+    <maxVel>1.0</maxVel>
+    <minDepth>0.00</minDepth>
+  </gazebo>
+```
+Hasonlóképp a `monaco.world` fileban is a megfelelő paraméterek beállításra kerültek:
+```sdf
+<surface>
+        <friction>
+            <ode>
+              <mu>100</mu>
+              <mu2>50</mu2>
+              <fdir1>1 0 0</fdir1>
+              <slip1>0.5</slip1>
+              <slip2>0</slip2>
+            </ode>
+```
+Ezeknek köszönhetően az autó kielégítő manőverezési képességekkel rendelkezik.
+>>>>>>> Stashed changes
 
 ## Képfeldolgozás
 A képfeldolgozást [OpenCV](https://opencv.org/ "OpenCV") segítségével tettük meg.  
