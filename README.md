@@ -9,17 +9,27 @@
 # Robotrendszerek laboratórium projekt feladat
 Robotrendszerek laboratórium tárgynak féléves projekt feladata, ahol ROS Noetic környezetben fejlesztettünk egy mobil robotot.
 
+A projektet készített:
+* Czémán Róbert
+* Nyuli Barnabás
+* Kurucz István
+
 ## Tartalomjegyzék
-1. [Feladatleírás](##Feladatleírás)
-1. [Versenyautó megtervezése](#Versenyautó-megtervezése)
-2. [Versenypálya](#Versenypálya)
-3. [Gazebo szimuláció](#Gazebo-szimuláció)
-4. [Alaklmazott szenzorok](#Alaklmazott-szenzorok)  
-4.1. [Kamera](#Kamera)
-5. [Skid steer kormányzás](#Skid-steer-kormányzás)
-6. [Képfeldolgozás OpenCV-vel](#Képfeldolgozás-OpenCV-vel])
-7. [Szimuláció futtatása](#Szimuláció-futtatása)
-8. [Telepítési útmutató](#Telepítési-útmutató)
+1. [Feladatleírás](#feladatleírás)
+2. [Telepítési útmutató](#telepítési-útmutató)
+3. [Szimuláció futtatása](#szimuláció-futtatása)
+4. [Versenypálya megtervezése](#versenypálya-megtervezése)  
+4.1. [Gazebo szimuláció](#gazebo-szimuláció)
+5. [Versenyautó megtervezése](#versenyautó-megtervezése)  
+5.1. [RViz szimuláció](#rviz-szimuláció)
+6. [Alaklmazott szenzorok](#alkalmazott-szenzorok)  
+6.1. [Kamera](#kamera)
+5. [Kormányzás](#kormányzás)
+6. [Képfeldolgozás](#képfeldolgozás)  
+6.1. [Képfeldolgozás lépései](#képfeldolgozás-lépései)  
+6.2. [Nehézségek a képfeldolgozás során](#nehézségek-a-képfeldolgozás-során)  
+6.3 .[A problémák megoldása](#a-problémák-megoldása)  
+6.4. [Az alkalmazott megoldások hátrányai](#az-alkalmazott-megoldások-hátrányai)
 
 ## Feladatleírás
 A feladat megvalósítása során a következő pontoknak kellett eleget tennünk:
@@ -27,19 +37,44 @@ A feladat megvalósítása során a következő pontoknak kellett eleget tennün
 * versenyautó modell készítése,
 * a robot autonóm vezetése saját ROS node segítségével.
 
-## Vonalkövető versenyautó programozása
-A sikeres telepítéshez és futtatáshoz szükséges fontosabb lépések:
+## Telepítési útmutató
+1. A repositoryt az alábbi paranccsal tudjuk megszerezni:
+```console
+git clone https://github.com/czrobi2001/ROS_HW_23_24.git
+```
+2. XServer telepítése (grafikus alkalmazás futtatása miatt)
+    * a telepítés megtehető például a következő linkre kattintva: [XServer](https://sourceforge.net/projects/vcxsrv/)
+    * XServer konfigurálása: Az *Extra settings* oldalon pipáljuk be a *Disable access control* opciót, valamint az *Additional parameters for VcXsrx* felirítú mezőbe gépeljük be a következők:
+    ```console
+    -nowgl
+    ```
+3. Szükséges függőségek (dependency) telepítése:
+    * 1
+    * 2
+    * ...
 
+A lépések teljesítésével már képesek leszünk a szimuláviót futtatni. Ennek a lépéseit a követkeező fejezet tartalmazza.
 
-# Versenyautó megtervezése
-A versenyautó tervezésnék ötletét internetes forrásból vettem, ami egy kis lego kocsi, amit Solidworks-ben az egyszerűbb kezelhetőség érdekében módosítottam.
+## Szimuláció futtatása
+A szimuláció elindításhoz először a mobil robotot kell megnyitni **gazebo**-ban, amit az alábbi paranccsal tehetünk meg.
+  ```console
+  roslaunch line_follower_race_car spawn_robot.launch
+  ```
 
-  ![alt text][image1]
+Majd miután elindult a szimuláció elindíthatjuk a `follow_curve.py` scriptet, ami a képfeldogozást végzi.
+  ```console
+  rosrun line_follower_race_car follow_curve.py
+  ```
 
-Ezekután blenderben beállítottam a megfelelő színeket, majd exportáltam egyenként a mozgó komponenseket. A mobil robot vázát illetve a szimulációhoz szükséges paraméterek beállítását a `mogi_bot.xacro` fájlban tettük meg, a robot irányításáért és a kamera képért felelős gazebo plug-in-ket a `mogi_bot.gazebo` fájlban adtuk hozzá.
+Ha az irányításhoz használt paraméterekre is kíváncsiak vagyunk, akkor egy 3. terminál ablakba írjuk be a következőt:
+  ```console
+  rqt
+  ```
 
-# Versenypálya
-A versenypályát szintén Solidworks-ben egy letöltött, és importált kép segítségével terveztem meg, aminek kontúrját körberajzoltam Besier görbékkel, és kiexportáltam egy `.stl` fájlt.
+Miután megnyílt az **rqt** a Plugins > Topics > Topic Monitor menüpontra kattintás után keressük ki a *cmd_vel* topicot és pipáljuk be. Ezen belül a *linear* és *angular* opciókat lenyitva láthatók a pontos értékek.
+
+## Versenypálya megtervezése
+A versenypályát Solidworks-ben egy letöltött, és importált kép segítségével terveztem meg, aminek kontúrját körberajzoltam Besier görbékkel, és kiexportáltam egy `.stl` fájlt.
 
 A pálya kontrúja
 
@@ -51,20 +86,38 @@ Blenderbe beimportálva készítettem egy a gazebo által is kezelhető collada 
 export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:~/bme_catkin_ws/src/ROS_HW_23_24/gazebo_models
 ```
 
-# Gazebo szimuláció
+### Gazebo szimuláció
 
-A versenyautó és pálya megjelenítése a szimulációban. A szimuláció elindításához egy `.world` kiterejesztésű fájlra van szükségünk, ami tartalmazza a világ, szimulációhoz szükséges fizikai beállításait, valamint a hozzáadott további modelleket.
+A modellt a szimulációs környezetben, vagyis a **gazebo**-ban is megtekinthetjük, ehhez az alábbi parancsot futtassuk:
+```console
+roslaunch line_follower_race_car world.launch 
+```
 
+A szimuláció elindításához egy `.world` kiterejesztésű fájlra van szükségünk, ami tartalmazza a világ, szimulációhoz szükséges fizikai beállításait, valamint a hozzáadott további modelleket.
 
   ![alt text][image4]
 
+A kocsi beimportálása a világba a `spawn_robot.launch` fájl elindításával történik, ahol argumentumként a robot kezdeti pozícióját is megadhatjuk.
 
-A kocsi beimportálása a világba a `spawn_robot.launch` fájl elindításával történik, ahol argumentumként a robot kezdeti pozícióját megadhatjuk.
 
-# Alkalmazott szenzorok
+## Versenyautó megtervezése
+A versenyautó tervezésnék ötletét internetes forrásból vettem, ami egy kis lego kocsi, amit Solidworks-ben az egyszerűbb kezelhetőség érdekében módosítottam.
+
+  ![alt text][image1]
+
+Ezekután blenderben beállítottam a megfelelő színeket, majd exportáltam egyenként a mozgó komponenseket. A mobil robot vázát illetve a szimulációhoz szükséges paraméterek beállítását a `mogi_bot.xacro` fájlban tettük meg, a robot irányításáért és a kamera képért felelős gazebo plug-in-ket a `mogi_bot.gazebo` fájlban adtuk hozzá.
+
+### RViz szimuláció
+
+A robot modellt megtekinthetjük **RViz**-ben az alábbi parancs segítségével:
+```console
+roslaunch line_follower_race_car check_urdf.launch
+```
+
+## Alkalmazott szenzorok
 A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, aminek paramétereit az órán használtak alapján állítottuk be.
 
-## Kamera
+### Kamera
 
   A kamerát az alábbi plugin valósítja meg. 
   ```xml
@@ -90,11 +143,30 @@ A képfeldogozáshoz egy kamera került elhelyezésre a versenykocsi elején, am
   
   Baloldalt a kezdeti, jobboldalt a megdöntött kamerakép látható.
   
+## Kormányzás
+A kormányzás megtervezése volt az egyik fő feladat a projekt során. Fontos volt a megfelelő típus kiválasztása, mivel a pálya és az autó adottságai miatt több szempontnak is meg kellett felelni. Ezek közül például kiemelném azt, hogy az autónak képesnek kell lennie nagyon kis íven is elfordulnia.
 
-# Képfeldolgozás
+Végül a feladatot a `skid-steer` kormányzással valósítottuk meg. Az erre alkalmazott plugin:
+```xml
+<gazebo>
+  <plugin name="ros_force_based_move" filename="libgazebo_ros_force_based_move.so">
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <torque_yaw_velocity_p_gain>10000.0</torque_yaw_velocity_p_gain>
+    <force_x_velocity_p_gain>10000.0</force_x_velocity_p_gain>
+    <force_y_velocity_p_gain>10000.0</force_y_velocity_p_gain>
+    <robotBaseFrame>base_footprint</robotBaseFrame>
+    <odometryRate>50.0</odometryRate>
+    <publishOdometryTf>true</publishOdometryTf>
+  </plugin>
+</gazebo>
+```
+
+## Képfeldolgozás
 A képfeldolgozást [OpenCV](https://opencv.org/ "OpenCV") segítségével tettük meg.  
 
-## Képfeldolgozás lépései
+### Képfeldolgozás lépései
 A robot irányításáért a `follow_curve.py` nevű Python script felel, ennek a működése a következő:  
 1. a kamerakép alapján egy bináris kép készítése, amin a pályát képező pixelek lesznek 1 (v. 255) értékűek
     * először a kapott képett HSV (Hue-Saturation-Value) színtérbe konvertáljuk   
@@ -155,37 +227,16 @@ A robot irányításáért a `follow_curve.py` nevű Python script felel, ennek 
 5. a meghatározott paraméterek közlése
     * a paramétereket a *cmd_vel* topic-ba küldjük `Twist` üzenet formájában
 
-## Nehézségek a képfeldolgozás során
+### Nehézségek a képfeldolgozás során
 Sok-sok kísérletezést követően eljutottunk oda, hogy a robot képes végighaladni a teljes pályán hiba nélkül, egész jó tempóban. A korábbi verziókban az alábbi hibák álltak fenn:
 1. a kanyarokat nagyon lassan veszi be
 2. visszafordító kanyarokban elhagyja a pályát
 
-## A problémák megoldása
+### A problémák megoldása
 Az előző részben említett problémákra végül a következő megoldásokat eszközöltük:
 1. több határértéket is felvettünk a kamerakép és a kontúr középpontja közötti távolság alapján és ezen távolságnak megfelelően vettük fel a sebesség és elfordulás mértéket (a pontos sebesség és elfordulás értékek tesztelések során lettek meghatározva)
 2. a problémát az idézte elő, hogy a kameraképen nagyon előrefelé lehetett csak látni (ekkor még a vízszintes síkkal párhuzamosan volt felszerelve), emiatt amikor egy visszafordító kanyarhoz ért a robot, akkor sokszor a pálya robot alatti része kikerült a képből és egy másik, távolabbi kontúr került a célpontjába - erre a megoldást a kamera megdöntése jelentette -45°-ban a vízszinteshez képest 
 
-## Az alkalmazott megoldások hátrányai
+### Az alkalmazott megoldások hátrányai
 1. az meghatározott határértékek alapvetően a jelenlegi pálya alapján lettek kikísérletezve, így nem garantálható, hogy minden más esetben megfelleően fog működni
 2. így csak a pályának a közvetlenül a robot előtti része látható, emiatt a későbbi fejlesztések nehezebbek lehetnek, ha a pálya későbbi részeinek megfelelően szeretnénk mondjuk egy adott ívett követni vagy egy meghatározott sebesség görbét, hogy a robot köridejét javítsuk a pályán
-
-# Skid steer kormányzás
-
-  Alkalmazott plug-in
-
-# Szimuláció futtatása
-A szimuláció elindításhoz először a mobil robotot kell megnyitni gazebo-ban, amit az alábbi paranccsal tehetünk meg.
-  ```console
-  roslaunch line_follower_race_car spawn_robot.launch
-  ```
-Majd miután elindult a szimuláció elindíthatjuk a `follow_curve.py` scriptet, ami a képfeldogozást végzi.
-  ```console
-  rosrun line_follower_race_car follow_curve.py
-  ```
-  
-  # Készítők
-  ```console
-  Czémán Róbert
-  Kurucz István
-  Nyuli Barnabás
-  ```

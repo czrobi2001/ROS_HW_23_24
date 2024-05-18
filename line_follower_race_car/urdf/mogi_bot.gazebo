@@ -14,7 +14,6 @@
       <odometryRate>50.0</odometryRate>
       <publishOdometryTf>true</publishOdometryTf>
     </plugin>
-
   </gazebo>
 
 <!-- Camera -->
