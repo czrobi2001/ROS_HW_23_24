@@ -15,23 +15,21 @@ A projektet készített:
 * Kurucz István
 
 ## Tartalomjegyzék
-- [Robotrendszerek laboratórium projekt feladat](#robotrendszerek-laboratórium-projekt-feladat)
-  - [Tartalomjegyzék](#tartalomjegyzék)
-  - [Feladatleírás](#feladatleírás)
-  - [Telepítési útmutató](#telepítési-útmutató)
-  - [Szimuláció futtatása](#szimuláció-futtatása)
-  - [Versenypálya megtervezése](#versenypálya-megtervezése)
-    - [Gazebo szimuláció](#gazebo-szimuláció)
-  - [Versenyautó megtervezése](#versenyautó-megtervezése)
-    - [RViz szimuláció](#rviz-szimuláció)
-  - [Alkalmazott szenzorok](#alkalmazott-szenzorok)
-    - [Kamera](#kamera)
-  - [Kormányzás](#kormányzás)
-  - [Képfeldolgozás](#képfeldolgozás)
-    - [Képfeldolgozás lépései](#képfeldolgozás-lépései)
-    - [Nehézségek a képfeldolgozás során](#nehézségek-a-képfeldolgozás-során)
-    - [A problémák megoldása](#a-problémák-megoldása)
-    - [Az alkalmazott megoldások hátrányai](#az-alkalmazott-megoldások-hátrányai)
+1. [Feladatleírás](#feladatleírás)
+2. [Telepítési útmutató](#telepítési-útmutató)
+3. [Szimuláció futtatása](#szimuláció-futtatása)
+4. [Versenypálya megtervezése](#versenypálya-megtervezése)  
+4.1. [Gazebo szimuláció](#gazebo-szimuláció)
+5. [Versenyautó megtervezése](#versenyautó-megtervezése)  
+5.1. [RViz szimuláció](#rviz-szimuláció)
+6. [Alaklmazott szenzorok](#alkalmazott-szenzorok)  
+6.1. [Kamera](#kamera)
+7. [Kormányzás](#kormányzás)
+8. [Képfeldolgozás](#képfeldolgozás)  
+8.1. [Képfeldolgozás lépései](#képfeldolgozás-lépései)  
+8.2. [Nehézségek a képfeldolgozás során](#nehézségek-a-képfeldolgozás-során)  
+8.3 .[A problémák megoldása](#a-problémák-megoldása)  
+8.4. [Az alkalmazott megoldások hátrányai](#az-alkalmazott-megoldások-hátrányai)
 
 ## Feladatleírás
 A feladat megvalósítása során a következő pontoknak kellett eleget tennünk:
