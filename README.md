@@ -57,13 +57,27 @@ A feladat megvalósítása során a következő pontoknak kellett eleget tennün
     pip install scipy
     ```
     *  Az alábbi ROS package-ek:
-       *  `std_msgs`
-       * `actionlib`
-       * `actionlib_msgs`
-       * `roscpp`
-       * `rospy`
-       * `message_generation`
-       * `message_runtime`
+    * `ros-noetic-actionlib`
+    * `ros-noetic-rospy`
+    * `ros-noetłc-theora-image-transport`
+    * `ros-noetic-urdf`
+    * `ros-noetic-xacro`
+    * `ros-noetic-roslaunch`
+    * `ros-noetic-joint-state-publisher`
+    * `ros-noetic-joint-state-publishér-gui`
+    * `ros-noetic-robot-state-publisher`
+    * `ros-noetic-rviz`
+    * `ros-noetic-ackermann-steering-controller`
+    * `ros-noetic-controller-manager`
+    * `ros-noetic-joint-state-controller`
+    * `ros-noetic-ros-control`
+    * `ros-noetic-ros-controllers`
+    * `ros-noetic-control-toolbox`
+    * `ros-noetic-gazebo-ros-control`
+    * `ros-noetic-joint-limits-interface`
+    * `ros-noetic-gazebo-ros`
+    * `ros-noetic-rqt-robot-steering`
+    * `ros-noetic-hector-trajectory-server`
   
     Ezek telepíthetők, az alábbi paranccsal:
     ```console
