@@ -297,4 +297,4 @@ Az előző részben említett problémákra végül a következő megoldásokat 
 1. az meghatározott határértékek alapvetően a jelenlegi pálya alapján lettek kikísérletezve, így nem garantálható, hogy minden más esetben megfelleően fog működni
 2. így csak a pályának a közvetlenül a robot előtti része látható, emiatt a későbbi fejlesztések nehezebbek lehetnek, ha a pálya későbbi részeinek megfelelően szeretnénk mondjuk egy adott ívett követni vagy egy meghatározott sebesség görbét, hogy a robot köridejét javítsuk a pályán
 
-<video src="./assets/gazebo.mp4" width="320" height="240" controls></video>
+https://github.com/czrobi2001/ROS_HW_23_24/blob/main/assets/gazebo.mp4
