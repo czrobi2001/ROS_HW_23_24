@@ -30,6 +30,7 @@ A projektet készített:
 8.2. [Nehézségek a képfeldolgozás során](#nehézségek-a-képfeldolgozás-során)  
 8.3 .[A problémák megoldása](#a-problémák-megoldása)  
 8.4. [Az alkalmazott megoldások hátrányai](#az-alkalmazott-megoldások-hátrányai)
+9. [Végeredmény](#végeredmény)
 
 ## Feladatleírás
 A feladat megvalósítása során a következő pontoknak kellett eleget tennünk:
@@ -291,10 +292,16 @@ Sok-sok kísérletezést követően eljutottunk oda, hogy a robot képes végigh
 ### A problémák megoldása
 Az előző részben említett problémákra végül a következő megoldásokat eszközöltük:
 1. több határértéket is felvettünk a kamerakép és a kontúr középpontja közötti távolság alapján és ezen távolságnak megfelelően vettük fel a sebesség és elfordulás mértéket (a pontos sebesség és elfordulás értékek tesztelések során lettek meghatározva)
-2. a problémát az idézte elő, hogy a kameraképen nagyon előrefelé lehetett csak látni (ekkor még a vízszintes síkkal párhuzamosan volt felszerelve), emiatt amikor egy visszafordító kanyarhoz ért a robot, akkor sokszor a pálya robot alatti része kikerült a képből és egy másik, távolabbi kontúr került a célpontjába - erre a megoldást a kamera megdöntése jelentette -45°-ban a vízszinteshez képest 
+2. a problémát az idézte elő, hogy a kameraképen nagyon előrefelé lehetett csak látni (ekkor még a vízszintes síkkal párhuzamosan volt felszerelve), emiatt amikor egy visszafordító kanyarhoz ért a robot, akkor sokszor a pálya robot alatti része kikerült a képből és egy másik, távolabbi kontúr került a célpontjába - erre a megoldást a kamera megdöntése jelentette -45°-ban a vízszinteshez képest  
+
 
 ### Az alkalmazott megoldások hátrányai
 1. az meghatározott határértékek alapvetően a jelenlegi pálya alapján lettek kikísérletezve, így nem garantálható, hogy minden más esetben megfelleően fog működni
 2. így csak a pályának a közvetlenül a robot előtti része látható, emiatt a későbbi fejlesztések nehezebbek lehetnek, ha a pálya későbbi részeinek megfelelően szeretnénk mondjuk egy adott ívett követni vagy egy meghatározott sebesség görbét, hogy a robot köridejét javítsuk a pályán
 
 https://github.com/czrobi2001/ROS_HW_23_24/blob/main/assets/gazebo.mp4
+
+## Végeredmény
+Az elkészült projekt demonstrációs videója:
+
+  <a href="https://www.youtube.com/watch?v=KLexHENxmKs"><img height="400" src="./assets/video.png"></a>
